@@ -25,20 +25,24 @@ async function getRecipe(value) {
 // Display API return value
 function showRecipe(dataPromise) {
   dataPromise.then((data) => {
+    const result = document.getElementById('results');
     if (data.length === 0) {
       result.innerHTML = `<h4 style="color:red;"> No match found in our database </h4>`;
       return;
     }
 
-    let html = '<div class="card" style="width: 18rem;">';
-    for (let i = 0; i < data.length; i++) {
+    let html = '<div class="card-container d-flex flex-wrap">';
+    data.forEach((recipe) => {
       html += `
-          <img class="card-img-top" src="${data[i]["image"]}" alt="Card image cap">
+        <div class="card mb-3" style="max-width: 18rem;">
+          <img src="${recipe.image}" class="card-img-top" alt="Recipe Image">
           <div class="card-body">
-            <h5 class="card-title">${data[i]["title"]}</h5>
-          </div><br>`;
-    }
-    result.innerHTML = html += "</div>";
+            <h5 class="card-title">${recipe.title}</h5>
+          </div>
+        </div>`;
+    });
+    html += '</div>';
+    result.innerHTML = html;
   });
 }
 

@@ -66,7 +66,9 @@ body form button {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
+
 }
+
 
 .card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -88,4 +90,23 @@ body form button {
       opacity: 1;
       transform: translateY(0);
   }
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 100%;
+    margin: 1.75rem auto;
+  }
+}
+.modal-body img{
+  width: 50%;
+  margin-right: 30px;
+}
+
+.instructions{
+  padding: 20px;
+}
+
+.list ul{
+  padding: 0px;
 }

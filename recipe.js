@@ -34,7 +34,7 @@ function showRecipe(dataPromise) {
     let html = '<div class="card-container d-flex flex-wrap">';
     data.forEach((recipe) => {
       html += `
-        <div class="card mb-3" style="max-width: 18rem;">
+        <div class="card mb-3" style="max-width: 18rem;" data-toggle="modal" data-target="#recipeModal" data-recipe-id="${recipe.id}">
           <img src="${recipe.image}" class="card-img-top" alt="Recipe Image">
           <div class="card-body">
             <h5 class="card-title">${recipe.title}</h5>
@@ -43,7 +43,40 @@ function showRecipe(dataPromise) {
     });
     html += '</div>';
     result.innerHTML = html;
+
+    // Event listener for each card
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card) => {
+      card.addEventListener('click', function() {
+        const recipeId = this.getAttribute('data-recipe-id');
+        console.log("clickkk11",recipeId)
+
+        const selectedRecipe = data.find(recipe => recipe.id == recipeId);
+        displayRecipeDetails(selectedRecipe);
+      });
+    });
   });
+}
+
+// Function to display recipe details in modal
+function displayRecipeDetails(recipe) {
+  console.log(recipe,"kkk")
+  const modalTitle = document.getElementById('recipeModalTitle');
+  const modalBody = document.getElementById('recipeModalBody');
+
+  if (!modalTitle || !modalBody) {
+    console.error('Modal elements not found');
+    return;
+  }
+
+  modalTitle.textContent = recipe.title;
+  modalBody.innerHTML = `
+    <img src="${recipe.image}" class="card-img-top" alt="Recipe Image">
+    <p><strong>Ingredients:</strong></p>
+    <ul>
+      ${recipe.usedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('')}
+      ${recipe.missedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('')}
+    </ul>`;
 }
 
 // Check for form submission
